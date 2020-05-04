@@ -8,6 +8,7 @@ services:
 
 before_install:
  - docker pull node:14-alpine
+ - npm install
 
 script:
  - docker run -it -p 3000:3000 --mount type=bind,source=$(pwd),target=/app -w=/app  node:14-alpine npm run test
