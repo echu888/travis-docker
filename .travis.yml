@@ -3,15 +3,16 @@ dist: bionic
 language: node_js
 
 node_js:
-  - node
+        - node
 
 services:
-  - docker
+        - docker
 
 before_install:
- - docker pull node:14-alpine
- - npm install
+# - docker pull node:14-alpine
+        - npm install
 
 script:
- - docker run -d -it -p 3000:3000 --mount type=bind,source=$(pwd),target=/app -w=/app  node:14-alpine npm run start
- - npm run cypress:ci
+        #- docker run -d -it -p 3000:3000 --mount type=bind,source=$(pwd),target=/app -w=/app  node:14-alpine npm run start
+        #- npm run cypress:ci
+        - npm run test:docker

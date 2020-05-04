@@ -5,9 +5,14 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "cypress": "cypress open",
-    "cypress:ci": "cypress run",
-    "test": "start-server-and-test start 3000 cypress:ci"
+    "mount:docker": "docker run -d -t -p 3000:3000 --mount type=bind,source=$(pwd),target=/app -w=/app --name travis-docker node:14-alpine",
+    "umount:docker": "docker stop travis-docker && docker rm travis-docker",
+    "start:docker": "docker exec -d travis-docker npm run start",
+    "test": "start-server-and-test start 3000 test:headless", 
+    "test:interactive": "cypress open",
+    "test:headless": "cypress run",
+    "test:ci": "wait-on tcp:3000 && npm run test:headless",
+    "test:docker": "npm run mount:docker && npm run start:docker && npm run test:ci && npm run umount:docker"
   },
   "repository": {
     "type": "git",
@@ -21,7 +26,8 @@
   "homepage": "https://github.com/echu888/travis-docker#readme",
   "devDependencies": {
     "cypress": "^4.5.0",
-    "start-server-and-test": "^1.11.0"
+    "start-server-and-test": "^1.11.0",
+    "wait-on": "^4.0.2"
   },
   "dependencies": {
     "express": "^4.17.1"
