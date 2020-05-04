@@ -2,9 +2,9 @@
   "name": "travis-docker",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node server.js",
     "cypress": "cypress open",
     "cypress:ci": "cypress run",
     "test": "start-server-and-test start 3000 cypress:ci"
@@ -22,5 +22,8 @@
   "devDependencies": {
     "cypress": "^4.5.0",
     "start-server-and-test": "^1.11.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
