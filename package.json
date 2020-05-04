@@ -4,15 +4,23 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "mount:docker": "docker run -d -t -p 3000:3000 --mount type=bind,source=$(pwd),target=/app -w=/app --name travis-docker node:14-alpine",
-    "umount:docker": "docker stop travis-docker && docker rm travis-docker",
-    "start:docker": "docker exec -d travis-docker npm run start",
-    "test": "start-server-and-test start 3000 test:headless", 
-    "test:interactive": "cypress open",
-    "test:headless": "cypress run",
+    "start": "npm run local:start",
+    "test": "npm run local:test",
+
+    "local:start": "node server.js",
+    "local:test": "start-server-and-test start 3000 test:headless", 
+    
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:manual_mount": "docker run -d -t -p 3000:3000 --mount type=bind,source=$(pwd),target=/app -w=/app --name travis-docker node:14-alpine",
+    "docker:manual_umount": "docker stop travis-docker && docker rm travis-docker",
+    "docker:manual_start": "docker exec -d travis-docker npm run start",
+    
+    "test:docker": "npm run docker:up && npm run test:ci ; npm run docker:down",
+    "test:interactive": "CYPRESS_baseUrl=http://127.0.0.1:3000 cypress open",
+    "test:headless": "CYPRESS_baseUrl=http://127.0.0.1:3000 cypress run",
     "test:ci": "wait-on tcp:3000 && npm run test:headless",
-    "test:docker": "npm run mount:docker && npm run start:docker && npm run test:ci && npm run umount:docker"
+    "test:manual_docker": "npm run docker:mount && npm run docker:start && npm run test:ci ; npm run docker:umount"
   },
   "repository": {
     "type": "git",
