@@ -1,0 +1,26 @@
+{
+  "name": "travis-docker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "cypress": "cypress open",
+    "cypress:ci": "cypress run",
+    "test": "start-server-and-test start 3000 cypress:ci"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/echu888/travis-docker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/echu888/travis-docker/issues"
+  },
+  "homepage": "https://github.com/echu888/travis-docker#readme",
+  "devDependencies": {
+    "cypress": "^4.5.0",
+    "start-server-and-test": "^1.11.0"
+  }
+}
