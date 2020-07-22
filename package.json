@@ -3,24 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "config": {
+    "port": "3000"
+  },
   "scripts": {
-    "start": "npm run local:start",
-    "test": "npm run local:test",
-
-    "local:start": "node server.js",
-    "local:test": "start-server-and-test start 3000 test:headless", 
-    
-    "docker:up": "docker-compose up -d",
-    "docker:down": "docker-compose down",
-    "docker:manual_mount": "docker run -d -t -p 3000:3000 --mount type=bind,source=$(pwd),target=/app -w=/app --name travis-docker node:14-alpine",
-    "docker:manual_umount": "docker stop travis-docker && docker rm travis-docker",
-    "docker:manual_start": "docker exec -d travis-docker npm run start",
-    
-    "test:docker": "npm run docker:up && npm run test:ci ; npm run docker:down",
-    "test:interactive": "CYPRESS_baseUrl=http://127.0.0.1:3000 cypress open",
-    "test:headless": "CYPRESS_baseUrl=http://127.0.0.1:3000 cypress run",
-    "test:ci": "wait-on tcp:3000 && npm run test:headless",
-    "test:manual_docker": "npm run docker:mount && npm run docker:start && npm run test:ci ; npm run docker:umount"
+    "start": "node server.js",
+    "test": "start-server-and-test start 3000 test:headless",
+    "pretest:ci": "docker-compose up -d",
+    "test:ci": "wait-on tcp:3000 && npm run test:headless ; docker-compose down",
+    "test:interactive": "scripts/cypress.sh open",
+    "test:headless": "scripts/cypress.sh run"
   },
   "repository": {
     "type": "git",
@@ -33,11 +25,12 @@
   },
   "homepage": "https://github.com/echu888/travis-docker#readme",
   "devDependencies": {
-    "cypress": "^4.5.0",
-    "start-server-and-test": "^1.11.0",
+    "cypress": "^4.11.0",
+    "start-server-and-test": "^1.11.2",
     "wait-on": "^4.0.2"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1"
   }
 }
