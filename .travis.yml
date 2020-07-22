@@ -15,4 +15,4 @@ before_install:
 script:
         #- docker run -d -it -p 3000:3000 --mount type=bind,source=$(pwd),target=/app -w=/app  node:14-alpine npm run start
         #- npm run cypress:ci
-        - npm run test:docker
+        - npm run test:ci
