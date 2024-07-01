@@ -26,8 +26,8 @@
   "homepage": "https://github.com/echu888/travis-docker#readme",
   "devDependencies": {
     "cypress": "^9.6.0",
-    "start-server-and-test": "^1.14.0",
-    "wait-on": "^6.0.1"
+    "start-server-and-test": "^2.0.3",
+    "wait-on": "^7.2.0"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
